@@ -29,13 +29,13 @@ class AStarPathingStrategy
         ArrayList<Node> closedlist = new ArrayList<>();
         openlist.add(current);
 
+
+        while (!openlist.isEmpty())
+        {
+        if (withinReach.test(current.getPoint(), end)) {
+            // build path and return
         }
-//        while (!withinR)
-//        {
-//        if (withinReach.test(current.getPoint(), end)) {
-//            // build path and return
-//        }
-//        }
+        }
 
         return path;
     }
