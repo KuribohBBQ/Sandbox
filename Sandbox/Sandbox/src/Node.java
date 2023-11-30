@@ -12,7 +12,7 @@ public class Node
 
     private Node left;
 
-    public Node(Point point, Node prior, Node up, Node right, Node down, Node left)
+    public Node(Point point, Node prior)
     {
         this.point = point;
         this.prior = prior;

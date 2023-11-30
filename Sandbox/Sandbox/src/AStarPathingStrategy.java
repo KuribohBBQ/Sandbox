@@ -21,38 +21,27 @@ class AStarPathingStrategy
     {
         List<Point> path = new LinkedList<Point>();
 
-        Node current = new Node(start);
+        Node current = new Node(start, null);
+        List<Point> neighbors = potentialNeighbors.apply(current.getPoint()).filter(canPassThrough).toList();
+
 
         ArrayList<Node> openlist = new ArrayList<>();
         ArrayList<Node> closedlist = new ArrayList<>();
         openlist.add(current);
-        if (validitycheck(current.getUp()))
-        {
-            openlist.add(current.getUp());
+
         }
-        if (validitycheck(current.getRight()))
-        {
-            openlist.add(current.getRight());
-        }
-        if (validitycheck(current.getDown()))
-        {
-            openlist.add(current.getDown());
-        }
-        if (validitycheck(current.getUp()))
-        {
-            openlist.add(current.getUp());
-        }
+//        while (!withinR)
+//        {
+//        if (withinReach.test(current.getPoint(), end)) {
+//            // build path and return
+//        }
+//        }
 
         return path;
     }
 
-    public boolean validitycheck(Node n)
-    {
-    }
-    public boolean withinbounds(Point p, grid)
-    {
 
-    }
+
     public double Manhattan(Node current, Node end)
     {
         return Math.abs(end.getPoint().x - current.getPoint().x) + Math.abs(end.getPoint().y - current.getPoint().y);
