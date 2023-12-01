@@ -12,7 +12,9 @@ public class Node
 
     private Node left;
 
-    public Node(Point point, Node prior)
+    private double f;
+
+    public Node(Point point, Node prior, double f)
     {
         this.point = point;
         this.prior = prior;
@@ -20,6 +22,7 @@ public class Node
         this.right = right;
         this.down = down;
         this.left = left;
+        this.f = f;
 
     }
 
@@ -51,6 +54,10 @@ public class Node
     {
         return this.left;
     }
+
+    public double getf(){return this.f;}
+
+    public void setf(double g, double h){this.f = g + h;}
 
 
 

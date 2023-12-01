@@ -21,7 +21,7 @@ class AStarPathingStrategy
     {
         List<Point> path = new LinkedList<Point>();
 
-        Node current = new Node(start, null);
+        Node current = new Node(start, null, Manhattan(start, end));
 //        List<Point> neighbors = potentialNeighbors.apply(current.getPoint()).filter(canPassThrough).toList();
 
 
@@ -30,7 +30,7 @@ class AStarPathingStrategy
         openlist.add(current);
         double g = 0;
         double h = 0;
-        double f = 0;
+
 
         while (!openlist.isEmpty())
         {
@@ -38,34 +38,39 @@ class AStarPathingStrategy
             //analyze valid adjacent nodes that are not on closed list
             for (Point n: neighbors)
             {
-                Node PotentialNode = new Node(n, current);
+                Node PotentialNode = new Node(n, current, 0);
                 //checks if node is already on openlist
                 for (Node check: openlist)
                 {
-                    if (check.getPoint() == PotentialNode.getPoint())
+                    //checking if node in openlist is not already in closedlist
+                    if (check.getPoint() == PotentialNode.getPoint() && checkIfInClosedlist(check, closedlist))
                     {
                         //checking if calculated g is better than previously calculated g
-                        double calc_g = Manhattan(PotentialNode, current);
-                        if (calc_g > g)
+                        double calc_g = Manhattan(PotentialNode.getPoint(), current.getPoint());
+                        if (calc_g < g)
                         {
                             g = calc_g;
                         }
                         //estimate distance of potential node to end point
-                        h = Manhattan(PotentialNode, end);
+                        h = Manhattan(PotentialNode.getPoint(), end);
+                        PotentialNode.setf(g, h);
+
+
                     }
                     //determine distance from start node(g value)
                     else
                     {
-                       double new_g = Manhattan
+                        double new_g = Manhattan(check.getPoint(), current.getPoint());
+                        g = new_g;
                     }
                 }
 
 
             }
 
-        if (withinReach.test(current.getPoint(), end)) {
-            // build path and return
-        }
+            if (withinReach.test(current.getPoint(), end)) {
+                // build path and return
+            }
 
         } //end of while loop
 
@@ -74,9 +79,20 @@ class AStarPathingStrategy
 
 
 
-    public double Manhattan(Node current, Node end)
+    public double Manhattan(Point current, Point end)
     {
-        return Math.abs(end.getPoint().x - current.getPoint().x) + Math.abs(end.getPoint().y - current.getPoint().y);
+        return Math.abs(end.x - current.x) + Math.abs(end.y - current.y);
+    }
+    public boolean checkIfInClosedlist(Node c, ArrayList<Node> closedlist)
+    {
+        for (Node check: closedlist)
+        {
+            if (c.getPoint() == check.getPoint())
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
 
