@@ -4,24 +4,17 @@ public class Node
 
     private Node prior;
 
-    private Node up;
+    private double g;
 
-    private Node right;
-
-    private Node down;
-
-    private Node left;
-
+    private double h;
     private double f;
 
-    public Node(Point point, Node prior, double f)
+    public Node(Point point, Node prior, double g, double h, double f)
     {
         this.point = point;
         this.prior = prior;
-        this.up = up;
-        this.right = right;
-        this.down = down;
-        this.left = left;
+        this.g = g;
+        this.h = h;
         this.f = f;
 
     }
@@ -34,28 +27,16 @@ public class Node
     {
         return this.prior;
     }
+    public double getg(){return this.g;}
 
-    public Node getUp()
-    {
-        return this.up;
-    }
-
-    public Node getRight()
-    {
-        return this.right;
-    }
-
-    public Node getDown()
-    {
-        return this.down;
-    }
-
-    public Node getLeft()
-    {
-        return this.left;
-    }
+    public double geth(){return this.h;}
 
     public double getf(){return this.f;}
+
+    public void setg(double newg)
+    {
+        this.g = newg;
+    }
 
     public void setf(double g, double h){this.f = g + h;}
 

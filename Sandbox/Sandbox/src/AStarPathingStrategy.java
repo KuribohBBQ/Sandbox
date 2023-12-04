@@ -1,13 +1,9 @@
-import java.util.List;
-import java.util.LinkedList;
-import java.util.ArrayList;
-import java.util.PriorityQueue;
+import java.util.*;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.HashMap;
 
 class AStarPathingStrategy
         implements PathingStrategy
@@ -21,52 +17,63 @@ class AStarPathingStrategy
     {
         List<Point> path = new LinkedList<Point>();
 
-        Node current = new Node(start, null, Manhattan(start, end));
+        Node current = new Node(start, null, 0, Manhattan(start, end), Manhattan(start, end));
 //        List<Point> neighbors = potentialNeighbors.apply(current.getPoint()).filter(canPassThrough).toList();
 
 
-        ArrayList<Node> openlist = new ArrayList<>();
+        PriorityQueue<Node> openlist = new PriorityQueue<>(Comparator.comparing());
         ArrayList<Node> closedlist = new ArrayList<>();
         openlist.add(current);
-        double g = 0;
-        double h = 0;
 
 
-        while (!openlist.isEmpty())
+
+        while (!current.equals(null))
         {
             List<Point> neighbors = potentialNeighbors.apply(current.getPoint()).filter(canPassThrough).toList();
             //analyze valid adjacent nodes that are not on closed list
-            for (Point n: neighbors)
+            for (Point n: neighbors) //n = potential neighbor
             {
-                Node PotentialNode = new Node(n, current, 0);
+                double g = current.getg() + 1;
+                double h = Manhattan(n, end);
+                double f = g + h;
+                Node PotentialNode = new Node(n, current, g, h, f) ;
                 //checks if node is already on openlist
                 for (Node check: openlist)
                 {
-                    //checking if node in openlist is not already in closedlist
-                    if (check.getPoint() == PotentialNode.getPoint() && checkIfInClosedlist(check, closedlist))
+                    //checking if node in openlist and is not already in closedlist
+                    if (check.getPoint().equals(PotentialNode.getPoint()) && checkIfInClosedlist(check, closedlist))
                     {
-                        //checking if calculated g is better than previously calculated g
-                        double calc_g = Manhattan(PotentialNode.getPoint(), current.getPoint());
-                        if (calc_g < g)
+                        //checking if potentialNode's calculated g is better than previously calculated g
+
+
+
+                        if (g < PotentialNode.getg())
                         {
-                            g = calc_g;
+                            // remove check from the open list
+                            // use equals method to remove the old node and add the new one
+                            // it looks like its doing nothing, but using location as identifier.
+                            // reshuffles node into the queue
+
+                            openlist.remove(PotentialNode);
+                            openlist.add(PotentialNode);
+                            // add Potential Node into open list
                         }
-                        //estimate distance of potential node to end point
-                        h = Manhattan(PotentialNode.getPoint(), end);
-                        PotentialNode.setf(g, h);
+
 
 
                     }
                     //determine distance from start node(g value)
-                    else
+                    else if (checkIfInClosedlist(check, closedlist))
                     {
-                        double new_g = Manhattan(check.getPoint(), current.getPoint());
-                        g = new_g;
+                        // add to open list
+
                     }
                 }
 
 
-            }
+            }//end of analyzing adjacent nodes
+            closedlist.add(current);
+            current = openlist.poll(); //removes first element from list
 
             if (withinReach.test(current.getPoint(), end)) {
                 // build path and return
@@ -87,12 +94,20 @@ class AStarPathingStrategy
     {
         for (Node check: closedlist)
         {
-            if (c.getPoint() == check.getPoint())
+            if (c.getPoint().equals(check.getPoint()))
             {
                 return false;
             }
         }
         return true;
+    }
+    public boolean equalsMethod(Node a, Node b)
+    {
+        if (a.getPoint().equals(b.getPoint()))
+        {
+            return true;
+        }
+        return false;
     }
 }
 
