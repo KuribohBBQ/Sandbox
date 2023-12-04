@@ -77,6 +77,7 @@ class AStarPathingStrategy
             current = openlist.poll(); //removes first element from list
 
             if (withinReach.test(current.getPoint(), end)) {
+
                 // build path and return
                 path.add(current.getPoint());
                 return path;
