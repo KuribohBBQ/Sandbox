@@ -40,6 +40,8 @@ public class Node
 
     public void setf(double g, double h){this.f = g + h;}
 
-
-
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 }

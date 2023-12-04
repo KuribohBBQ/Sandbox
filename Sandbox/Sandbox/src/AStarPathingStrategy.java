@@ -21,7 +21,7 @@ class AStarPathingStrategy
 //        List<Point> neighbors = potentialNeighbors.apply(current.getPoint()).filter(canPassThrough).toList();
 
 
-        PriorityQueue<Node> openlist = new PriorityQueue<>(Comparator.comparing());
+        PriorityQueue<Node> openlist = new PriorityQueue<>(Comparator.comparing(Node :: getf));
         ArrayList<Node> closedlist = new ArrayList<>();
         openlist.add(current);
 
@@ -66,6 +66,7 @@ class AStarPathingStrategy
                     else if (checkIfInClosedlist(check, closedlist))
                     {
                         // add to open list
+                        openlist.add(check);
 
                     }
                 }
@@ -77,6 +78,8 @@ class AStarPathingStrategy
 
             if (withinReach.test(current.getPoint(), end)) {
                 // build path and return
+                path.add(current.getPoint());
+                return path;
             }
 
         } //end of while loop
