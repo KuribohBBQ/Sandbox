@@ -28,7 +28,7 @@ class AStarPathingStrategy
             if (withinReach.test(current.getPoint(), end)) {
 
                 // build path and return
-              while (current.getPrior() != null)
+              while (current.getg() != 0)
               {
                  path.add(0, current.getPoint());
                  current = current.getPrior();

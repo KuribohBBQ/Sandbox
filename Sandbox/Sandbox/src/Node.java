@@ -1,12 +1,13 @@
 import java.util.Objects;
-
 public class Node
+
 {
     private Point point;
 
     private Node prior;
 
     private double g;
+
 
     private double h;
     private double f;
@@ -51,6 +52,6 @@ public class Node
 
         Node n = (Node) o;
 
-        return Objects.equals(point, ((Node) n).point) && Objects.equals(prior, ((Node) n).prior ) && g == n.g && h == n.h && f == n.f;
+        return Objects.equals(point, ((Node) n).point) && Objects.equals(prior, ((Node) n).prior) && g == n.g && h == n.h && f == n.f;
     }
 }
