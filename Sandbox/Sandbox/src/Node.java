@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Node
 {
     private Point point;
@@ -40,8 +42,15 @@ public class Node
 
     public void setf(double g, double h){this.f = g + h;}
 
+
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public boolean equals(Object o) {
+        if (o == null || this.getClass() != o.getClass()) {
+            return false;
+        }
+
+        Node n = (Node) o;
+
+        return Objects.equals(point, ((Node) n).point) && Objects.equals(prior, ((Node) n).prior ) && g == n.g && h == n.h && f == n.f;
     }
 }
