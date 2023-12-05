@@ -73,6 +73,7 @@ class AStarPathingStrategy
 
         //end of analyzing adjacent nodes
         closedlist.add(current);
+
         current = openlist.poll(); //removes first element from list
 
 
