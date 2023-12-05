@@ -8,6 +8,7 @@ public class Node
 
     private double g;
 
+
     private double h;
     private double f;
 
