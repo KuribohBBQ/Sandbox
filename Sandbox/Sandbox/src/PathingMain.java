@@ -38,8 +38,8 @@ public class PathingMain extends PApplet
    public void setup()
    {
       path = new LinkedList<>();
-      wPos = new Point(2, 2);
-      goalPos = new Point(14, 13);
+      wPos = new Point(5, 1);
+      goalPos = new Point(5, 5);
 
       wyvern = loadImage("images/wyvern1.bmp");
       background = loadImage("images/grass.bmp");
@@ -77,7 +77,7 @@ public class PathingMain extends PApplet
          grid[11][col] = GridValues.OBSTACLE;
       }
 
-      grid[13][14] = GridValues.GOAL;
+      grid[5][5] = GridValues.GOAL;
    }
 
    public void draw()

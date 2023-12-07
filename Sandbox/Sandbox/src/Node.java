@@ -36,12 +36,6 @@ public class Node
 
     public double getf(){return this.f;}
 
-    public void setg(double newg)
-    {
-        this.g = newg;
-    }
-
-    public void setf(double g, double h){this.f = g + h;}
 
 
     @Override
@@ -52,6 +46,6 @@ public class Node
 
         Node n = (Node) o;
 
-        return Objects.equals(point, ((Node) n).point) && Objects.equals(prior, ((Node) n).prior ) && g == n.g && h == n.h && f == n.f;
+        return Objects.equals(point, n.point);
     }
 }

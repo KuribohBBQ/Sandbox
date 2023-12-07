@@ -45,11 +45,11 @@ class AStarPathingStrategy
                 Node PotentialNode = new Node(n, current, g, h, f);
 
                 //checking if node in openlist and is not already in closedlist
-                if (checkIfInOpenList(PotentialNode, openlist) && checkIfInClosedlist(PotentialNode, closedlist)) {
+                if (openlist.contains(PotentialNode) && !closedlist.contains(PotentialNode)) {
                     //checking if potentialNode's calculated g is better than previously calculated g
 
 
-                    if (g <= PotentialNode.getg()) {
+                    if (g < openlist.poll().getg()) { // get g out of openList version
                         // remove check from the open list
                         // use equals method to remove the old node and add the new one
                         // it looks like its doing nothing, but using location as identifier.
@@ -61,9 +61,10 @@ class AStarPathingStrategy
                     }
 
 
+
                 }
-                //determine distance from start node(g value)
-                else if (checkIfInClosedlist(PotentialNode, closedlist)) {
+
+                else if (!closedlist.contains(PotentialNode)) {
                     // add to open list
                     openlist.add(PotentialNode);
 
