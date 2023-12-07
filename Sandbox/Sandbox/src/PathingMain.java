@@ -38,7 +38,7 @@ public class PathingMain extends PApplet
    public void setup()
    {
       path = new LinkedList<>();
-      wPos = new Point(2, 2);
+      wPos = new Point(5, 1);
       goalPos = new Point(5, 5);
 
       wyvern = loadImage("images/wyvern1.bmp");
