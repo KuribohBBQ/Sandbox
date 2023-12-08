@@ -20,11 +20,14 @@ class AStarPathingStrategy
 
 
         PriorityQueue<Node> openlist = new PriorityQueue<>(Comparator.comparing(Node::getf));
-        ArrayList<Node> closedlist = new ArrayList<>();
+        Map<Point, Node> closedlist = new HashMap<>();
+//        ArrayList<Node> closedlist = new ArrayList<>();
+        //change .add to .put, give key and a node
         //openlist.add(current);
 
 
-        while (current != null) {
+        while (!closedlist.isEmpty()) //or check if the map is empty
+            {
             if (withinReach.test(current.getPoint(), end)) {
 
                 // build path and return
@@ -49,7 +52,7 @@ class AStarPathingStrategy
                     //checking if potentialNode's calculated g is better than previously calculated g
 
 
-                    if (g < openlist.poll().getg()) { // get g out of openList version
+                    if (PotentialNode.getg() < openlist.poll().getg()) { // get g out of openList version
                         // remove check from the open list
                         // use equals method to remove the old node and add the new one
                         // it looks like its doing nothing, but using location as identifier.
@@ -64,7 +67,7 @@ class AStarPathingStrategy
 
                 }
 
-                else if (!closedlist.contains(PotentialNode)) {
+                else if (!closedlist.add(PotentialNode)) {
                     // add to open list
                     openlist.add(PotentialNode);
 
@@ -73,7 +76,7 @@ class AStarPathingStrategy
 
 
         //end of analyzing adjacent nodes
-        closedlist.add(current);
+        closedlist.(n, );
 
         current = openlist.poll(); //removes first element from list
 
