@@ -22,21 +22,19 @@ class AStarPathingStrategy
         PriorityQueue<Node> openlist = new PriorityQueue<>(Comparator.comparing(Node::getf));
         Map<Point, Node> closedlist = new HashMap<>();
 //        ArrayList<Node> closedlist = new ArrayList<>();
-        //change .add to .put, give key and a node
-        //openlist.add(current);
+//        openlist.add(current);
 
 
-        while (!closedlist.isEmpty()) //or check if the map is empty
-            {
+        while (current != null) {
             if (withinReach.test(current.getPoint(), end)) {
 
                 // build path and return
-              while (current.getg() != 0)
-              {
-                 path.add(0, current.getPoint());
-                 current = current.getPrior();
-              }
-              return path; //make sure it doeesnt include start and end nodes
+                while (current.getg() != 0)
+                {
+                    path.add(0, current.getPoint());
+                    current = current.getPrior();
+                }
+                return path; //make sure it doeesnt include start and end nodes
             }
             List<Point> neighbors = potentialNeighbors.apply(current.getPoint()).filter(canPassThrough).toList();
             //analyze valid adjacent nodes that are not on closed list
@@ -48,12 +46,13 @@ class AStarPathingStrategy
                 Node PotentialNode = new Node(n, current, g, h, f);
 
                 //checking if node in openlist and is not already in closedlist
-                if (openlist.contains(PotentialNode) && !closedlist.contains(PotentialNode)) {
+                if (openlist.contains(PotentialNode) && !closedlist.containsKey(PotentialNode.getPoint()))
+                {
                     //checking if potentialNode's calculated g is better than previously calculated g
 
 
-                    if (PotentialNode.getg() < openlist.poll().getg()) { // get g out of openList version
-                        // remove check from the open list
+                    if (g < openlist.poll().getg()) {
+
                         // use equals method to remove the old node and add the new one
                         // it looks like its doing nothing, but using location as identifier.
                         // reshuffles node into the queue
@@ -64,29 +63,29 @@ class AStarPathingStrategy
                     }
 
 
-
                 }
 
-                else if (!closedlist.add(PotentialNode)) {
+                else if (!closedlist.containsKey(PotentialNode.getPoint())) {
                     // add to open list
                     openlist.add(PotentialNode);
-
                 }
+
             }
 
 
-        //end of analyzing adjacent nodes
-        closedlist.(n, );
+            //end of analyzing adjacent nodes
+            closedlist.put(current.getPoint(), current);
 
-        current = openlist.poll(); //removes first element from list
+            current = openlist.poll(); //removes first element from list
 
 
 
-    }//end of while loop
+        }//end of while loop
 
 
         return path;
     }
+
 
 
 
